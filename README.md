@@ -1,31 +1,28 @@
 GridControl
 ===========
 
+Members
+-------
 Ralf, Ronald, Marten, Bastian
 
-Info:
-http://www.webguys.de/magento/turchen-23-pimp-my-produktgrid/
+Features
+--------
+- add columns
+- remove columns
+- change columns
+- move columns
+- add new attributes
+- join new attributes
 
-Goals
+Todo
 -----
-
-- remove blocks (removeColumn())
-- add blocks (addColumn())
-- move blocks (addColumnsOrder())
-
-- extend collection (join/addAttribute)
-- modify renderer
-
 - role based grid layout
-
-
-
-someday... admin grid configurator
+- configuration GUI (?)
 
 XML Syntax
 ----------
 gridcontrol.xml in module etc folder:
-
+```
 <?xml version="1.0"?>
 <gridcontrol>
     <grids>
@@ -41,10 +38,39 @@ gridcontrol.xml in module etc folder:
 
         <gridname>
             <column>
-                <action (remove|move)>
-                    parameters
-                </action>
+                <remove/>
+
+                <after>columnname</after>
+
+                <add>
+                    <header>Column Title</header>
+                    <type>text</type>
+                    <index>qty</index>
+                    <!--<joinAttribute>status|catalog_product/status|entity_id||inner</joinAttribute>-->
+                    <joinField>qty|cataloginventory/stock_item|qty|product_id=entity_id|{{table}}.stock_id=1|left</joinField>
+                </add>
             </column>
+
+            <selecttest>
+                <add>
+                    <header>Status Column</header>
+                    <type>options</type>
+                    <options>
+                        <option_a>
+                            <key>1</key>
+                            <value>Active</value>
+                        </option_a>
+
+                        <option_b>
+                            <key>2</key>
+                            <value>Inactive</value>
+                        </option_b>
+                    </options>
+                    <index>status</index>
+                </add>
+                <after>column</after>
+            </selecttest>
         </gridname>
     </grids>
 </gridcontrol>
+```

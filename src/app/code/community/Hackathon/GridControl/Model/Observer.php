@@ -27,7 +27,13 @@ class Hackathon_GridControl_Model_Observer
             foreach (Mage::getSingleton('hackathon_gridcontrol/config')->getJoinAttributes() as $attribute) {
                 $attribute = explode('|', $attribute);
                 try {
-                    $event->getCollection()->joinAttribute($attribute[0], $attribute[1], $attribute[2], (strlen($attribute[3]) ? $attribute[3] :null), $attribute[4]);
+                    $event->getCollection()->joinAttribute(
+                        $attribute[0],
+                        $attribute[1],
+                        $attribute[2],
+                        (strlen($attribute[3]) ? $attribute[3] :null),
+                        $attribute[4]
+                    );
                 } catch (Exception $e) { }
             }
 
