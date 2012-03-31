@@ -14,6 +14,7 @@ Goals
 - move blocks (addColumnsOrder())
 
 - extend collection (join/addAttribute)
+- modify renderer
 
 - role based grid layout
 
