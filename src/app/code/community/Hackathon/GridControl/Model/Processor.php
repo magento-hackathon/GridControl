@@ -32,7 +32,10 @@ class Hackathon_GridControl_Model_Processor
         }
 
         $block->sortColumnsByOrder();
+
+        Mage::register('hackathon_gridcontrol_current_blockid', $block->getId());
         $this->_callProtectedMethod($block, '_prepareCollection');
+        Mage::unregister('hackathon_gridcontrol_current_blockid');
     }
 
     protected function _removeAction($params)
@@ -50,12 +53,15 @@ class Hackathon_GridControl_Model_Processor
         $arr = array();
 
         foreach ($params->getAction()->children() as $option) {
+            if ($option->getName() == 'index') {
+                Mage::getSingleton('hackathon_gridcontrol/config')->addLoadAttribute((string) $option);
+            }
+
             if (count($option->children())) {
                 $optionarray = array();
                 foreach ($option->children() as $optionvalue) {
                     $optionarray[(string) $optionvalue->key] = (string) $optionvalue->value;
                 }
-                //print_r($optionarray);
                 $arr[$option->getName()] = $optionarray;
             } else {
                 $arr[$option->getName()] = (string) $option;

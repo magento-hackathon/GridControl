@@ -33,7 +33,22 @@
                     </options>
                     <index>status</index>
                 </add>
+                <after>attribute_set_id</after>
             </test>
+
+            <short_description>
+                <add>
+                    <type>text</type>
+                    <index>description</index>
+                </add>
+            </short_description>
+
+            <short_description2>
+                <add>
+                    <type>text</type>
+                    <index>description</index>
+                </add>
+            </short_description2>
         </productGrid>
     </grids>
 </gridcontrol>

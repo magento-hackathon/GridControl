@@ -1,9 +1,10 @@
 <?php
 
-class Hackathon_GridControl_Model_Config extends Mage_Core_Model_Abstract
+class Hackathon_GridControl_Model_Config extends Varien_Object
 {
     protected $_config = null;
     protected $_gridList = array();
+    protected $_loadAttributes = array();
 
     protected function _loadConfig()
     {
@@ -33,5 +34,19 @@ class Hackathon_GridControl_Model_Config extends Mage_Core_Model_Abstract
         }
 
         return $this->_gridList;
+    }
+
+    public function addLoadAttribute($attribute)
+    {
+        if (!in_array($attribute, $this->_loadAttributes)) {
+            $this->_loadAttributes[] = $attribute;
+        }
+
+        return $this;
+    }
+
+    public function getLoadAttributes()
+    {
+        return $this->_loadAttributes;
     }
 }

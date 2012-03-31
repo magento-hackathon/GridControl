@@ -16,4 +16,13 @@ class Hackathon_GridControl_Model_Observer
             Mage::getModel('hackathon_gridcontrol/processor')->processBlock($block);
         }
     }
+
+    public function eavCollectionAbstractLoadBefore(Varien_Event_Observer $event)
+    {
+        if (Mage::registry('hackathon_gridcontrol_current_blockid')) {
+            foreach (Mage::getSingleton('hackathon_gridcontrol/config')->getLoadAttributes() as $attribute) {
+                $event->getCollection()->addAttributeToSelect($attribute);
+            }
+        }
+    }
 }
