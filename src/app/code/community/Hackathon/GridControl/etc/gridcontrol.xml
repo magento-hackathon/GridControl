@@ -38,6 +38,7 @@
 
             <short_description>
                 <add>
+                    <header>Short Desc</header>
                     <type>text</type>
                     <index>description</index>
                 </add>
@@ -45,6 +46,7 @@
 
             <short_description2>
                 <add>
+                    <header>Short Desc</header>
                     <type>text</type>
                     <index>description</index>
                 </add>
