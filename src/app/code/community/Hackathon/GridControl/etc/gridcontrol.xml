@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<gridcontrol>
+    <grids>
+        <product.grid>
+            <entity_id>
+                <remove/>
+            </entity_id>
+
+            <sku>
+                <after>name</after>
+            </sku>
+        </product.grid>
+    </grids>
+</gridcontrol>
