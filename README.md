@@ -5,3 +5,14 @@ Ralf, Ronald, Martin, Bastian
 
 Info:
 http://www.webguys.de/magento/turchen-23-pimp-my-produktgrid/
+
+Goals
+-----
+
+- remove blocks (removeColumn())
+- add blocks (addColumn())
+- move blocks (addColumnsOrder())
+
+- extend collection (join/addAttribute)
+
+- role based grid layout

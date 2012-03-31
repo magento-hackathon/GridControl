@@ -14,6 +14,13 @@ class Hackathon_GridControl_Model_Observer
 
         if ($block->getNameInLayout() == 'product.grid') {
             $block->removeColumn('entity_id');
+
+            $block->addColumn('entity_id', array(
+                'header'=> Mage::helper('catalog')->__('ID'),
+                'width' => '50px',
+                'type'  => 'number',
+                'index' => 'entity_id',
+            ));
         }
     }
 }
