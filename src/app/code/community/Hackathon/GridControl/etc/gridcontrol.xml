@@ -50,9 +50,7 @@
                     <type>text</type>
                     <index>qty</index>
                     <!--<joinAttribute>status|catalog_product/status|entity_id||inner</joinAttribute>-->
-                    <joinField>
-                        qty|cataloginventory/stock_item|qty|product_id=entity_id|{{table}}.stock_id=1|left
-                    </joinField>
+                    <!--<joinField>qty|cataloginventory/stock_item|qty|product_id=entity_id|{{table}}.stock_id=1|left</joinField>-->
                 </add>
             </short_description2>
         </productGrid>
@@ -61,6 +59,14 @@
             <real_order_id>
                 <remove/>
             </real_order_id>
+
+            <shipping_description>
+                <add>
+                    <header>Shipping Description</header>
+                    <index>test</index>
+                    <joinField>sales/order|main_table.entity_id=`sales/order`.entity_id|shipping_description AS test</joinField>
+                </add>
+            </shipping_description>
         </sales_order_grid>
     </grids>
 </gridcontrol>

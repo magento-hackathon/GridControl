@@ -38,45 +38,69 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
         return $this->_gridList;
     }
 
-    public function addLoadAttribute($attribute)
+    public function addLoadAttribute($blockId, $attribute)
     {
+        if (!isset($this->_loadAttributes[$blockId])) {
+            $this->_loadAttributes[$blockId] = array();
+        }
+
         if (!in_array($attribute, $this->_loadAttributes)) {
-            $this->_loadAttributes[] = $attribute;
+            $this->_loadAttributes[$blockId][] = $attribute;
         }
 
         return $this;
     }
 
-    public function getLoadAttributes()
+    public function getLoadAttributes($blockId)
     {
-        return $this->_loadAttributes;
+        if (!isset($this->_loadAttributes[$blockId])) {
+            $this->_loadAttributes[$blockId] = array();
+        }
+
+        return $this->_loadAttributes[$blockId];
     }
 
-    public function addJoinAttribute($attribute)
+    public function addJoinAttribute($blockId, $attribute)
     {
+        if (!isset($this->_joinAttributes[$blockId])) {
+            $this->_joinAttributes[$blockId] = array();
+        }
+
         if (!in_array($attribute, $this->_joinAttributes)) {
-            $this->_joinAttributes[] = $attribute;
+            $this->_joinAttributes[$blockId][] = $attribute;
         }
 
         return $this;
     }
 
-    public function getJoinAttributes()
+    public function getJoinAttributes($blockId)
     {
-        return $this->_joinAttributes;
+        if (!isset($this->_joinAttributes[$blockId])) {
+            $this->_joinAttributes[$blockId] = array();
+        }
+
+        return $this->_joinAttributes[$blockId];
     }
 
-    public function addJoinField($attribute)
+    public function addJoinField($blockId, $attribute)
     {
+        if (!isset($this->_joinFields[$blockId])) {
+            $this->_joinFields[$blockId] = array();
+        }
+
         if (!in_array($attribute, $this->_joinFields)) {
-            $this->_joinFields[] = $attribute;
+            $this->_joinFields[$blockId][] = $attribute;
         }
 
         return $this;
     }
 
-    public function getJoinFields()
+    public function getJoinFields($blockId)
     {
-        return $this->_joinFields;
+        if (!isset($this->_joinFields[$blockId])) {
+            $this->_joinFields[$blockId] = array();
+        }
+
+        return $this->_joinFields[$blockId];
     }
 }
