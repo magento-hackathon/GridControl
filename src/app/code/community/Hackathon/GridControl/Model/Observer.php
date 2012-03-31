@@ -12,7 +12,7 @@ class Hackathon_GridControl_Model_Observer
     {
         $block = $event->getBlock();
 
-        if (in_array($block->getNameInLayout(), Mage::getSingleton('hackathon_gridcontrol/config')->getGridList())) {
+        if (in_array($block->getId(), Mage::getSingleton('hackathon_gridcontrol/config')->getGridList())) {
             Mage::getModel('hackathon_gridcontrol/processor')->processBlock($block);
         }
     }

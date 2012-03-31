@@ -1,14 +1,39 @@
 <?xml version="1.0"?>
 <gridcontrol>
     <grids>
-        <product.grid>
+        <productGrid>
             <entity_id>
                 <remove/>
+
+                <add>
+                    <header>Test</header>
+                    <type>number</type>
+                    <index>entity_id</index>
+                </add>
             </entity_id>
 
             <sku>
-                <after>name</after>
+                <after>attribute_set_id</after>
             </sku>
-        </product.grid>
+
+            <test>
+                <add>
+                    <header>Test Column</header>
+                    <type>options</type>
+                    <options>
+                        <option_1>
+                            <key>1</key>
+                            <value>ja</value>
+                        </option_1>
+
+                        <option_2>
+                            <key>2</key>
+                            <value>nein</value>
+                        </option_2>
+                    </options>
+                    <index>status</index>
+                </add>
+            </test>
+        </productGrid>
     </grids>
 </gridcontrol>
