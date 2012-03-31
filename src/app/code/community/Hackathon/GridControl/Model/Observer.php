@@ -23,6 +23,27 @@ class Hackathon_GridControl_Model_Observer
             foreach (Mage::getSingleton('hackathon_gridcontrol/config')->getLoadAttributes() as $attribute) {
                 $event->getCollection()->addAttributeToSelect($attribute);
             }
+
+            foreach (Mage::getSingleton('hackathon_gridcontrol/config')->getJoinAttributes() as $attribute) {
+                $attribute = explode('|', $attribute);
+                try {
+                    $event->getCollection()->joinAttribute($attribute[0], $attribute[1], $attribute[2], (strlen($attribute[3]) ? $attribute[3] :null), $attribute[4]);
+                } catch (Exception $e) { }
+            }
+
+            foreach (Mage::getSingleton('hackathon_gridcontrol/config')->getJoinFields() as $field) {
+                $field = explode('|', $field);
+                try {
+                    $event->getCollection()->joinField(
+                        $field[0],
+                        $field[1],
+                        $field[2],
+                        $field[3],
+                        $field[4],
+                        $field[5]
+                    );
+                } catch (Exception $e) { }
+            }
         }
     }
 }

@@ -55,6 +55,10 @@ class Hackathon_GridControl_Model_Processor
         foreach ($params->getAction()->children() as $option) {
             if ($option->getName() == 'index') {
                 Mage::getSingleton('hackathon_gridcontrol/config')->addLoadAttribute((string) $option);
+            } else if ($option->getName() == 'joinAttribute') {
+                Mage::getSingleton('hackathon_gridcontrol/config')->addJoinAttribute((string) $option);
+            } else if ($option->getName() == 'joinField') {
+                Mage::getSingleton('hackathon_gridcontrol/config')->addJoinField((string) $option);
             }
 
             if (count($option->children())) {

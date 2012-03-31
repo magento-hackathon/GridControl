@@ -5,6 +5,8 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
     protected $_config = null;
     protected $_gridList = array();
     protected $_loadAttributes = array();
+    protected $_joinAttributes = array();
+    protected $_joinFields = array();
 
     protected function _loadConfig()
     {
@@ -48,5 +50,33 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
     public function getLoadAttributes()
     {
         return $this->_loadAttributes;
+    }
+
+    public function addJoinAttribute($attribute)
+    {
+        if (!in_array($attribute, $this->_joinAttributes)) {
+            $this->_joinAttributes[] = $attribute;
+        }
+
+        return $this;
+    }
+
+    public function getJoinAttributes()
+    {
+        return $this->_joinAttributes;
+    }
+
+    public function addJoinField($attribute)
+    {
+        if (!in_array($attribute, $this->_joinFields)) {
+            $this->_joinFields[] = $attribute;
+        }
+
+        return $this;
+    }
+
+    public function getJoinFields()
+    {
+        return $this->_joinFields;
     }
 }

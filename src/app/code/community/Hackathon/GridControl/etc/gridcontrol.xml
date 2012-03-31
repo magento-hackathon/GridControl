@@ -46,7 +46,9 @@
             <short_description2>
                 <add>
                     <type>text</type>
-                    <index>description</index>
+                    <index>qty</index>
+                    <!--<joinAttribute>status|catalog_product/status|entity_id||inner</joinAttribute>-->
+                    <joinField>qty|cataloginventory/stock_item|qty|product_id=entity_id|{{table}}.stock_id=1|left</joinField>
                 </add>
             </short_description2>
         </productGrid>
