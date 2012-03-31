@@ -10,6 +10,10 @@ class Hackathon_GridControl_Model_Observer
      */
     public function adminhtmlBlockHtmlBefore(Varien_Event_Observer $event)
     {
+        $block = $event->getBlock();
 
+        if ($block->getNameInLayout() == 'product.grid') {
+            $block->removeColumn('entity_id');
+        }
     }
 }
