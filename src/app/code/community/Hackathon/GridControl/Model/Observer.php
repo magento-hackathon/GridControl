@@ -12,15 +12,8 @@ class Hackathon_GridControl_Model_Observer
     {
         $block = $event->getBlock();
 
-        if ($block->getNameInLayout() == 'product.grid') {
-            $block->removeColumn('entity_id');
-
-            $block->addColumn('entity_id', array(
-                'header'=> Mage::helper('catalog')->__('ID'),
-                'width' => '50px',
-                'type'  => 'number',
-                'index' => 'entity_id',
-            ));
+        if (in_array($block->getNameInLayout(), Mage::getSingleton('hackathon_gridcontrol/config')->getGridList())) {
+            Mage::getModel('hackathon_gridcontrol/processor')->processBlock($block);
         }
     }
 }
