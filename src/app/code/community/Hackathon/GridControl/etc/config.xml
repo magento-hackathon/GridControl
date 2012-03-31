@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+    <global>
+        <models>
+            <hackathon_gridcontrol>
+                <class>Hackathon_GridControl_Model</class>
+            </hackathon_gridcontrol>
+        </models>
+
+        <helpers>
+            <hackathon_gridcontrol>
+                <class>Hackathon_GridControl_Helper</class>
+            </hackathon_gridcontrol>
+        </helpers>
+    </global>
+
+    <adminhtml>
+        <events>
+            <adminhtml_block_html_before>
+                <observers>
+                    <hackathon_gridcontrol>
+                        <type>singleton</type>
+                        <class>hackathon_gridcontrol/observer</class>
+                        <method>adminhtmlBlockHtmlBefore</method>
+                    </hackathon_gridcontrol>
+                </observers>
+            </adminhtml_block_html_before>
+        </events>
+    </adminhtml>
+</config>
