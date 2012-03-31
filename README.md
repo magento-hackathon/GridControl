@@ -16,3 +16,7 @@ Goals
 - extend collection (join/addAttribute)
 
 - role based grid layout
+
+
+
+someday... admin grid configurator
