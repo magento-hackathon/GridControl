@@ -7,6 +7,7 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
     protected $_loadAttributes = array();
     protected $_joinAttributes = array();
     protected $_joinFields = array();
+    protected $_joins = array();
 
     protected function _loadConfig()
     {
@@ -54,7 +55,7 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
     public function getLoadAttributes($blockId)
     {
         if (!isset($this->_loadAttributes[$blockId])) {
-            $this->_loadAttributes[$blockId] = array();
+            return array();
         }
 
         return $this->_loadAttributes[$blockId];
@@ -76,7 +77,7 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
     public function getJoinAttributes($blockId)
     {
         if (!isset($this->_joinAttributes[$blockId])) {
-            $this->_joinAttributes[$blockId] = array();
+            return array();
         }
 
         return $this->_joinAttributes[$blockId];
@@ -98,9 +99,31 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
     public function getJoinFields($blockId)
     {
         if (!isset($this->_joinFields[$blockId])) {
-            $this->_joinFields[$blockId] = array();
+            return array();
         }
 
         return $this->_joinFields[$blockId];
+    }
+
+    public function addJoin($blockId, $join)
+    {
+        if (!isset($this->_joins[$blockId])) {
+            $this->_joins[$blockId] = array();
+        }
+
+        if (!in_array($join, $this->_joins)) {
+            $this->_joins[$blockId][] = $join;
+        }
+
+        return $this;
+    }
+
+    public function getJoins($blockId)
+    {
+        if (!isset($this->_joins[$blockId])) {
+            return array();
+        }
+
+        return $this->_joins[$blockId];
     }
 }

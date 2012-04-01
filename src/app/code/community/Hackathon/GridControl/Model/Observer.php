@@ -62,7 +62,26 @@ class Hackathon_GridControl_Model_Observer
             // join fields to collection
             foreach (Mage::getSingleton('hackathon_gridcontrol/config')->getJoinFields($blockId) as $field) {
                 $field = explode('|', $field);
-                // 3 parameters needed for join()
+                // 3 parameters needed for joinField()
+                if (count($field) < 6) {
+                    continue;
+                }
+                try {
+                    $event->getCollection()->joinField(
+                        $field[0],
+                        $field[1],
+                        $field[2],
+                        $field[3],
+                        $field[4],
+                        $field[5]
+                    );
+                } catch (Exception $e) { /* echo $e->getMessage(); */ }
+            }
+
+            // joins to collection
+            foreach (Mage::getSingleton('hackathon_gridcontrol/config')->getJoins($blockId) as $field) {
+                $field = explode('|', $field);
+                // 3 parameters needed for joinField()
                 if (count($field) < 3) {
                     continue;
                 }
@@ -72,12 +91,14 @@ class Hackathon_GridControl_Model_Observer
                         $field[1],
                         $field[2]
                     );
-
-                    echo (string) $event->getCollection()->getSelect();
                 } catch (Exception $e) { /* echo $e->getMessage(); */ }
             }
 
-            echo (string) $event->getCollection()->getSelect();
+            foreach (Mage::registry('hackathon_gridcontrol_current_block')->getColumns() as $column) {
+                if ($column->getJoinIndex()) {
+                    $column->setIndex($column->getJoinIndex());
+                }
+            }
         }
     }
 }

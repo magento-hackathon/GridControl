@@ -4,12 +4,6 @@
         <productGrid>
             <entity_id>
                 <remove/>
-
-                <add>
-                    <header>Test</header>
-                    <type>number</type>
-                    <index>entity_id</index>
-                </add>
             </entity_id>
 
             <sku>
@@ -40,17 +34,18 @@
                 <add>
                     <header>Short Desc</header>
                     <type>text</type>
-                    <index>description</index>
+                    <index>short_description</index>
                 </add>
+                <after>name</after>
             </short_description>
 
             <short_description2>
                 <add>
-                    <header>Short Desc</header>
+                    <header>QTY</header>
                     <type>text</type>
                     <index>qty</index>
                     <!--<joinAttribute>status|catalog_product/status|entity_id||inner</joinAttribute>-->
-                    <!--<joinField>qty|cataloginventory/stock_item|qty|product_id=entity_id|{{table}}.stock_id=1|left</joinField>-->
+                    <joinField>qty|cataloginventory/stock_item|qty|product_id=entity_id|{{table}}.stock_id=1|left</joinField>
                 </add>
             </short_description2>
         </productGrid>
@@ -63,9 +58,11 @@
             <shipping_description>
                 <add>
                     <header>Shipping Description</header>
-                    <index>test</index>
-                    <joinField>sales/order|main_table.entity_id=`sales/order`.entity_id|shipping_description AS test</joinField>
+                    <join_index>shipping_description</join_index>
+                    <join>sales/order|main_table.entity_id=`sales/order`.entity_id|shipping_description</join>
+                    <!--<filter_index>`sales/order`.shipping_description</filter_index>-->
                 </add>
+                <after>status</after>
             </shipping_description>
         </sales_order_grid>
     </grids>
