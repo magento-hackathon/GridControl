@@ -60,7 +60,6 @@
                     <header>Shipping Description</header>
                     <join_index>shipping_description</join_index>
                     <join>sales/order|main_table.entity_id=`sales/order`.entity_id|shipping_description</join>
-                    <!--<filter_index>`sales/order`.shipping_description</filter_index>-->
                 </add>
                 <after>status</after>
             </shipping_description>
