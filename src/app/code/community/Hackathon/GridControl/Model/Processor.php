@@ -100,6 +100,7 @@ class Hackathon_GridControl_Model_Processor
                     'condition' => (string) $attribute['condition'],
                     'field' => (string) $attribute['field'],
                     'column' => $params->getColumn()->getName(),
+                    'where' => (string) $attribute['where']
                 ));
                 continue;
             }

@@ -65,8 +65,8 @@
             </shipping_description>
             <region>
                 <add>
-                    <header>Region (_address Table)</header>
-                    <join table="sales/order_address" condition="main_table.entity_id={{table}}.parent_id AND {{table}}.address_type = 'billing'" field="region"/>
+                    <header>Region</header>
+                    <join table="sales/order_address" condition="main_table.entity_id={{table}}.parent_id" field="region" where="{{table}}.address_type|eq|billing"/>
                 </add>
                 <after>status</after>
             </region>

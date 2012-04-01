@@ -87,6 +87,7 @@ class Hackathon_GridControl_Model_Observer
 
             // joins to collection
             foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId) as $field) {
+
                 try {
                     $event->getCollection()->join(
                         $field['table'],
@@ -97,13 +98,23 @@ class Hackathon_GridControl_Model_Observer
                 } catch (Exception $e) { /* echo $e->getMessage(); */ }
             }
 
-            echo (string) $event->getCollection()->getSelect();
-           // exit;
+            // add where to join
+            if(isset($field['where'])) {
+                $field['where'] = str_replace('{{table}}', '`' . $field['table'] . '`', $field['where']);
+                $whereParts = explode('|', $field['where']);
+
+                // add attribute filter
+                $event->getCollection()->addAttributeToFilter($whereParts[0], array($whereParts[1] => $whereParts[2]));
+            }
+
+            // debug
+            //echo (string) $event->getCollection()->getSelect();
+
 
             // update index from join_index (needed for joins)
             foreach (Mage::registry('hackathon_gridcontrol_current_block')->getColumns() as $column) {
                 if (isset($columnJoinField[$column->getId()])) {
-                    $column->setIndex($columnJoinField[$column->getId()]);
+                   $column->setIndex($columnJoinField[$column->getId()]);
                 }
             }
         }

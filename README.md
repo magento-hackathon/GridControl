@@ -18,6 +18,8 @@ Todo
 -----
 - role based grid layout
 - configuration GUI (?)
+- concat columns in query and use as to get them for the grid
+- better xml syntax for where attribute
 
 XML Syntax
 ----------
