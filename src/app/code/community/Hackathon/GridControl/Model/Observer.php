@@ -33,6 +33,8 @@ class Hackathon_GridControl_Model_Observer
      */
     public function eavCollectionAbstractLoadBefore(Varien_Event_Observer $event)
     {
+        $columnJoinField = array();
+
         if (Mage::registry('hackathon_gridcontrol_current_block')) {
             $blockId = Mage::registry('hackathon_gridcontrol_current_block')->getId();
 
@@ -42,9 +44,9 @@ class Hackathon_GridControl_Model_Observer
             $config = Mage::getSingleton('hackathon_gridcontrol/config');
 
             // add attributes to collection
-            foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_ADD_ATTRIBUTE, $blockId) as $entry) {
-                $event->getCollection()->addAttributeToSelect($entry);
-            }
+            //foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_ADD_ATTRIBUTE, $blockId) as $entry) {
+                //$event->getCollection()->addAttributeToSelect($entry);
+            //}
 
             // join attributes to collection
             foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN_ATTRIBUTE, $blockId) as $attribute) {
@@ -85,24 +87,20 @@ class Hackathon_GridControl_Model_Observer
 
             // joins to collection
             foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId) as $field) {
-                $field = explode('|', $field);
-                // 3 parameters needed for join()
-                if (count($field) < 3) {
-                    continue;
-                }
                 try {
                     $event->getCollection()->join(
-                        $field[0],
-                        $field[1],
-                        $field[2]
+                        $field['table'],
+                        str_replace('{{table}}', '`' . $field['table'] . '`', $field['condition']),
+                        $field['field']
                     );
+                    $columnJoinField[$field['column']] = $field['field'];
                 } catch (Exception $e) { /* echo $e->getMessage(); */ }
             }
 
             // update index from join_index (needed for joins)
             foreach (Mage::registry('hackathon_gridcontrol_current_block')->getColumns() as $column) {
-                if ($column->getJoinIndex()) {
-                    $column->setIndex($column->getJoinIndex());
+                if (isset($columnJoinField[$column->getId()])) {
+                    $column->setIndex($columnJoinField[$column->getId()]);
                 }
             }
         }

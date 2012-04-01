@@ -95,7 +95,12 @@ class Hackathon_GridControl_Model_Processor
                 $config->addCollectionUpdate(Hackathon_GridControl_Model_Config::TYPE_JOIN_FIELD, $blockId, (string) $attribute);
                 continue;
             } else if ($attribute->getName() == 'join') {
-                $config->addCollectionUpdate(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId, (string) $attribute);
+                $config->addCollectionUpdate(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId, array(
+                    'table' => (string) $attribute['table'],
+                    'condition' => (string) $attribute['condition'],
+                    'field' => (string) $attribute['field'],
+                    'column' => $params->getColumn()->getName(),
+                ));
                 continue;
             }
 

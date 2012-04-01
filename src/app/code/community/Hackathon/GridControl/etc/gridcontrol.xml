@@ -43,9 +43,10 @@
                 <add>
                     <header>QTY</header>
                     <type>text</type>
-                    <index>qty</index>
+                    <!--<index>qty</index>-->
                     <!--<joinAttribute>status|catalog_product/status|entity_id||inner</joinAttribute>-->
-                    <joinField>qty|cataloginventory/stock_item|qty|product_id=entity_id|{{table}}.stock_id=1|left</joinField>
+                    <!--<joinField>qty|cataloginventory/stock_item|qty|product_id=entity_id|{{table}}.stock_id=1|left</joinField>-->
+                    <!--<join table="cataloginventory/stock_item" condition="main_table.entity_id=`cataloginventory/stock_item`.product_id" field="qty"/>-->
                 </add>
             </short_description2>
         </productGrid>
@@ -58,11 +59,16 @@
             <shipping_description>
                 <add>
                     <header>Shipping Description</header>
-                    <join_index>shipping_description</join_index>
-                    <join>sales/order|main_table.entity_id=`sales/order`.entity_id|shipping_description</join>
+                    <join table="sales/order" condition="main_table.entity_id={{table}}.entity_id" field="shipping_description"/>
                 </add>
                 <after>status</after>
             </shipping_description>
+
+            <bla>
+                <add>
+                    <index>status</index>
+                </add>
+            </bla>
         </sales_order_grid>
     </grids>
 </gridcontrol>
