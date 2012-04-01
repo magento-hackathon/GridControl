@@ -33,16 +33,21 @@ class Hackathon_GridControl_Model_Observer
      */
     public function eavCollectionAbstractLoadBefore(Varien_Event_Observer $event)
     {
-        if (Mage::registry('hackathon_gridcontrol_current_blockid')) {
-            $blockId = Mage::registry('hackathon_gridcontrol_current_blockid');
+        if (Mage::registry('hackathon_gridcontrol_current_block')) {
+            $blockId = Mage::registry('hackathon_gridcontrol_current_block')->getId();
+
+            /**
+             * @var Hackathon_GridControl_Model_Config $config
+             */
+            $config = Mage::getSingleton('hackathon_gridcontrol/config');
 
             // add attributes to collection
-            foreach (Mage::getSingleton('hackathon_gridcontrol/config')->getLoadAttributes($blockId) as $attribute) {
-                $event->getCollection()->addAttributeToSelect($attribute);
+            foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_ADD_ATTRIBUTE, $blockId) as $entry) {
+                $event->getCollection()->addAttributeToSelect($entry);
             }
 
             // join attributes to collection
-            foreach (Mage::getSingleton('hackathon_gridcontrol/config')->getJoinAttributes($blockId) as $attribute) {
+            foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN_ATTRIBUTE, $blockId) as $attribute) {
                 $attribute = explode('|', $attribute);
                 // 5 parameters needed for joinAttribute()
                 if (count($attribute) < 5) {
@@ -60,9 +65,9 @@ class Hackathon_GridControl_Model_Observer
             }
 
             // join fields to collection
-            foreach (Mage::getSingleton('hackathon_gridcontrol/config')->getJoinFields($blockId) as $field) {
+            foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN_FIELD, $blockId) as $field) {
                 $field = explode('|', $field);
-                // 3 parameters needed for joinField()
+                // 6 parameters needed for joinField()
                 if (count($field) < 6) {
                     continue;
                 }
@@ -79,9 +84,9 @@ class Hackathon_GridControl_Model_Observer
             }
 
             // joins to collection
-            foreach (Mage::getSingleton('hackathon_gridcontrol/config')->getJoins($blockId) as $field) {
+            foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId) as $field) {
                 $field = explode('|', $field);
-                // 3 parameters needed for joinField()
+                // 3 parameters needed for join()
                 if (count($field) < 3) {
                     continue;
                 }
@@ -94,6 +99,7 @@ class Hackathon_GridControl_Model_Observer
                 } catch (Exception $e) { /* echo $e->getMessage(); */ }
             }
 
+            // update index from join_index (needed for joins)
             foreach (Mage::registry('hackathon_gridcontrol_current_block')->getColumns() as $column) {
                 if ($column->getJoinIndex()) {
                     $column->setIndex($column->getJoinIndex());

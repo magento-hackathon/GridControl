@@ -12,6 +12,58 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
     protected $_joinFields = array();
     protected $_joins = array();
 
+    protected $_collectionUpdates = array();
+
+    const TYPE_ADD_ATTRIBUTE = 'addAttribute';
+    const TYPE_JOIN_FIELD = 'joinField';
+    const TYPE_JOIN_ATTRIBUTE = 'joinAttribute';
+    const TYPE_JOIN = 'join';
+
+    /**
+     * stores collection updates
+     *
+     * @param string $type
+     * @param string $block
+     * @param string $value
+     * @return Hackathon_GridControl_Model_Config
+     */
+    public function addCollectionUpdate($type, $block, $value)
+    {
+        if (!isset($this->_collectionUpdates[$type])) {
+            $this->_collectionUpdates[$type] = array();
+        }
+
+        if (!isset($this->_collectionUpdates[$type][$block])) {
+            $this->_collectionUpdates[$type][$block] = array();
+        }
+
+        if (!in_array($value, $this->_collectionUpdates[$type][$block])) {
+            $this->_collectionUpdates[$type][$block][] = $value;
+        }
+
+        return $this;
+    }
+
+    /**
+     * returns collection updates
+     *
+     * @param string $type
+     * @param string $block
+     * @return array
+     */
+    public function getCollectionUpdates($type, $block)
+    {
+        if (!isset($this->_collectionUpdates[$type])) {
+            return array();
+        }
+
+        if (!isset($this->_collectionUpdates[$type][$block])) {
+            return array();
+        }
+
+        return $this->_collectionUpdates[$type][$block];
+    }
+
     /**
      * load gridcontrol.xml configurations
      *

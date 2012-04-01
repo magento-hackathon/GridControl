@@ -42,13 +42,11 @@ class Hackathon_GridControl_Model_Processor
         // resort columns
         $block->sortColumnsByOrder();
 
-        // register current block id, needed to extend the collection in Hackathon_GridControl_Model_Observer
-        Mage::register('hackathon_gridcontrol_current_blockid', $block->getId());
+        // register current block, needed to extend the collection in Hackathon_GridControl_Model_Observer
         Mage::register('hackathon_gridcontrol_current_block', $block);
         // call _prepareCollection to reload the collection and apply column filters
         $this->_callProtectedMethod($block, '_prepareCollection');
-        // remove current blockid to prevent race conditions in later collection loads
-        Mage::unregister('hackathon_gridcontrol_current_blockid');
+        // remove current block to prevent race conditions in later collection loads
         Mage::unregister('hackathon_gridcontrol_current_block');
     }
 
@@ -81,19 +79,23 @@ class Hackathon_GridControl_Model_Processor
     {
         $columnConfig = array();
         $blockId = $params->getBlock()->getId();
+        /**
+         * @var Hackathon_GridControl_Model_Config $config
+         */
+        $config = Mage::getSingleton('hackathon_gridcontrol/config');
 
         foreach ($params->getAction()->children() as $attribute) {
             // 5 special cases
             if ($attribute->getName() == 'index') {
-                Mage::getSingleton('hackathon_gridcontrol/config')->addLoadAttribute($blockId, (string) $attribute);
+                $config->addCollectionUpdate(Hackathon_GridControl_Model_Config::TYPE_ADD_ATTRIBUTE, $blockId, (string) $attribute);
             } else if ($attribute->getName() == 'joinAttribute') {
-                Mage::getSingleton('hackathon_gridcontrol/config')->addJoinAttribute($blockId, (string) $attribute);
+                $config->addCollectionUpdate(Hackathon_GridControl_Model_Config::TYPE_JOIN_ATTRIBUTE, $blockId, (string) $attribute);
                 continue;
             } else if ($attribute->getName() == 'joinField') {
-                Mage::getSingleton('hackathon_gridcontrol/config')->addJoinField($blockId, (string) $attribute);
+                $config->addCollectionUpdate(Hackathon_GridControl_Model_Config::TYPE_JOIN_FIELD, $blockId, (string) $attribute);
                 continue;
             } else if ($attribute->getName() == 'join') {
-                Mage::getSingleton('hackathon_gridcontrol/config')->addJoin($blockId, (string) $attribute);
+                $config->addCollectionUpdate(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId, (string) $attribute);
                 continue;
             }
 
@@ -111,7 +113,7 @@ class Hackathon_GridControl_Model_Processor
         }
 
         // add column to grid block
-        $column = $params->getBlock()->addColumn($params->getColumn()->getName(), $columnConfig);
+        $params->getBlock()->addColumn($params->getColumn()->getName(), $columnConfig);
     }
 
     /**
