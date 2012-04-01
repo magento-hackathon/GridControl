@@ -1,19 +1,27 @@
 <?xml version="1.0"?>
 <gridcontrol>
     <grids>
+        <!-- grid id -->
         <productGrid>
+            <!-- column name -->
             <entity_id>
+                <!-- action -->
                 <remove/>
             </entity_id>
 
             <sku>
+                <!-- set column position after argument -->
                 <after>attribute_set_id</after>
             </sku>
 
             <test>
+                <!-- add new column -->
                 <add>
+                    <!-- header attribute -->
                     <header>Test Column</header>
+                    <!-- type -->
                     <type>options</type>
+                    <!-- options array -->
                     <options>
                         <option_1>
                             <key>1</key>
@@ -27,6 +35,7 @@
                     </options>
                     <index>status</index>
                 </add>
+                <!-- set position -->
                 <after>attribute_set_id</after>
             </test>
 
@@ -34,6 +43,7 @@
                 <add>
                     <header>Short Desc</header>
                     <type>text</type>
+                    <!-- index: attribute/field name -->
                     <index>short_description</index>
                 </add>
                 <after>name</after>
@@ -43,15 +53,25 @@
                 <add>
                     <header>QTY</header>
                     <type>text</type>
+                    <!-- simple EAV join examples -->
                     <!--<index>qty</index>-->
                     <!--<joinAttribute>status|catalog_product/status|entity_id||inner</joinAttribute>-->
                     <!--<joinField>qty|cataloginventory/stock_item|qty|product_id=entity_id|{{table}}.stock_id=1|left</joinField>-->
-                    <!--<join table="cataloginventory/stock_item" condition="main_table.entity_id=`cataloginventory/stock_item`.product_id" field="qty"/>-->
                 </add>
             </short_description2>
+
+            <bla>
+                <add>
+                    <index>status</index>
+                    <type>options</type>
+                    <!-- get singleton of catalog/product_status and calls getOptionArray -->
+                    <options>catalog/product_status::getOptionArray</options>
+                </add>
+            </bla>
         </productGrid>
 
         <sales_order_grid>
+            <!-- remove order id -->
             <real_order_id>
                 <remove/>
             </real_order_id>
@@ -59,16 +79,11 @@
             <shipping_description>
                 <add>
                     <header>Shipping Description</header>
+                    <!-- join shipping description from sales/order table -->
                     <join table="sales/order" condition="main_table.entity_id={{table}}.entity_id" field="shipping_description"/>
                 </add>
                 <after>status</after>
             </shipping_description>
-
-            <bla>
-                <add>
-                    <index>status</index>
-                </add>
-            </bla>
         </sales_order_grid>
     </grids>
 </gridcontrol>

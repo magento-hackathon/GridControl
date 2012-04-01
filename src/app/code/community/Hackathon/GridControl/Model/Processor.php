@@ -102,6 +102,16 @@ class Hackathon_GridControl_Model_Processor
                     'column' => $params->getColumn()->getName(),
                 ));
                 continue;
+            } else if ($attribute->getName() == 'options') {
+                if (strpos((string) $attribute, '::') !== false) {
+                    list($_module, $_method) = explode('::', (string) $attribute);
+                    $_module = Mage::getSingleton($_module);
+                    $_call = array($_module, $_method);
+                    if (is_callable($_call)) {
+                        $columnConfig['options'] = call_user_func($_call);
+                        continue;
+                    }
+                }
             }
 
             if (count($attribute->children())) {
