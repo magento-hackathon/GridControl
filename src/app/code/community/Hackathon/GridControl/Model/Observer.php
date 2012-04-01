@@ -97,6 +97,9 @@ class Hackathon_GridControl_Model_Observer
                 } catch (Exception $e) { /* echo $e->getMessage(); */ }
             }
 
+            echo (string) $event->getCollection()->getSelect();
+           // exit;
+
             // update index from join_index (needed for joins)
             foreach (Mage::registry('hackathon_gridcontrol_current_block')->getColumns() as $column) {
                 if (isset($columnJoinField[$column->getId()])) {

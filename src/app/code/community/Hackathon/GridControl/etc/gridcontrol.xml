@@ -63,6 +63,13 @@
                 </add>
                 <after>status</after>
             </shipping_description>
+            <region>
+                <add>
+                    <header>Region (_address Table)</header>
+                    <join table="sales/order_address" condition="main_table.entity_id={{table}}.parent_id AND {{table}}.address_type = 'billing'" field="region"/>
+                </add>
+                <after>status</after>
+            </region>
 
             <bla>
                 <add>
