@@ -85,7 +85,7 @@ class Hackathon_GridControl_Model_Processor
         $config = Mage::getSingleton('hackathon_gridcontrol/config');
 
         foreach ($params->getAction()->children() as $attribute) {
-            // 5 special cases
+            // 4 special cases
             if ($attribute->getName() == 'index') {
                 $config->addCollectionUpdate(Hackathon_GridControl_Model_Config::TYPE_ADD_ATTRIBUTE, $blockId, (string) $attribute);
             } else if ($attribute->getName() == 'joinAttribute') {
@@ -117,7 +117,7 @@ class Hackathon_GridControl_Model_Processor
     }
 
     /**
-     * allows to invoke protected methods
+     * allows invoking protected methods
      *
      * @param $object
      * @param string $methodName
