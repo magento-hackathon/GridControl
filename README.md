@@ -21,8 +21,9 @@ Todo
 
 XML Syntax
 ----------
-gridcontrol.xml in module etc folder:
+`gridcontrol.xml` in module etc folder:
 
+``````xml
 <?xml version="1.0"?>
 <gridcontrol>
     <grids>
@@ -73,3 +74,4 @@ gridcontrol.xml in module etc folder:
         </gridname>
     </grids>
 </gridcontrol>
+``````
