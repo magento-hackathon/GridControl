@@ -25,7 +25,15 @@
                     </hackathon_gridcontrol>
                 </observers>
             </adminhtml_block_html_before>
-
+            <adminhtml_block_export_before>
+                <observers>
+                    <hackathon_gridcontrol>
+                        <type>singleton</type>
+                        <class>hackathon_gridcontrol/observer</class>
+                        <method>adminhtmlBlockExportBefore</method>
+                    </hackathon_gridcontrol>
+                </observers>
+            </adminhtml_block_export_before>
             <core_collection_abstract_load_before>
                 <observers>
                     <hackathon_gridcontrol>

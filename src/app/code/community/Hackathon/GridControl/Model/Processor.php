@@ -12,7 +12,7 @@ class Hackathon_GridControl_Model_Processor
      *
      * @param Mage_Adminhtml_Block_Widget $block
      */
-    public function processBlock($block)
+    public function processBlock($block, $callProtectMethod = false)
     {
         $config = Mage::getSingleton('hackathon_gridcontrol/config')->getConfig();
 
@@ -38,16 +38,15 @@ class Hackathon_GridControl_Model_Processor
                 )));
             }
         }
-
-        // resort columns
-        $block->sortColumnsByOrder();
-
-        // register current block, needed to extend the collection in Hackathon_GridControl_Model_Observer
-        Mage::register('hackathon_gridcontrol_current_block', $block);
-        // call _prepareCollection to reload the collection and apply column filters
-        $this->_callProtectedMethod($block, '_prepareCollection');
-        // remove current block to prevent race conditions in later collection loads
-        Mage::unregister('hackathon_gridcontrol_current_block');
+        //FIXME why only needed for html output
+        if(true === $callProtectMethod) {
+            // register current block, needed to extend the collection in Hackathon_GridControl_Model_Observer
+            Mage::register('hackathon_gridcontrol_current_block', $block);
+            // call _prepareCollection to reload the collection and apply column filters
+            $this->_callProtectedMethod($block, '_prepareCollection');
+            // remove current block to prevent race conditions in later collection loads
+            Mage::unregister('hackathon_gridcontrol_current_block');
+        }
     }
 
     /**
@@ -100,18 +99,11 @@ class Hackathon_GridControl_Model_Processor
                     'condition' => (string) $attribute['condition'],
                     'field' => (string) $attribute['field'],
                     'column' => $params->getColumn()->getName(),
+                    'where' => (string) $attribute['where'],
+                    'concat' => (string) $attribute['concat'],
+                'alias' => (string) $attribute['alias']
                 ));
                 continue;
-            } else if ($attribute->getName() == 'options') {
-                if (strpos((string) $attribute, '::') !== false) {
-                    list($_module, $_method) = explode('::', (string) $attribute);
-                    $_module = Mage::getSingleton($_module);
-                    $_call = array($_module, $_method);
-                    if (is_callable($_call)) {
-                        $columnConfig['options'] = call_user_func($_call);
-                        continue;
-                    }
-                }
             }
 
             if (count($attribute->children())) {
@@ -126,7 +118,6 @@ class Hackathon_GridControl_Model_Processor
                 $columnConfig[$attribute->getName()] = (string) $attribute;
             }
         }
-
         // add column to grid block
         $params->getBlock()->addColumn($params->getColumn()->getName(), $columnConfig);
     }
@@ -140,6 +131,7 @@ class Hackathon_GridControl_Model_Processor
      */
     protected function _callProtectedMethod($object, $methodName)
     {
+        
         $reflection = new ReflectionClass($object);
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
