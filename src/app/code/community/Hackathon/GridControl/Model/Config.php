@@ -70,9 +70,6 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
             }
             $previousKey = $key;
         }
-
-        Mage::log($this->_collectionUpdates);
-
         return $this;
     }
     /**
