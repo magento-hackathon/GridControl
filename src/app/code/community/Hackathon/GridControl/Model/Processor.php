@@ -38,7 +38,6 @@ class Hackathon_GridControl_Model_Processor
                 )));
             }
         }
-
         // resort columns
         $block->sortColumnsByOrder();
 
@@ -99,6 +98,7 @@ class Hackathon_GridControl_Model_Processor
                     'table' => (string) $attribute['table'],
                     'condition' => (string) $attribute['condition'],
                     'field' => (string) $attribute['field'],
+                    'array_cols' => array((string) $attribute['field']),
                     'column' => $params->getColumn()->getName(),
                 ));
                 continue;

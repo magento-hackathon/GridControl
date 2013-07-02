@@ -85,17 +85,21 @@ class Hackathon_GridControl_Model_Observer
                 } catch (Exception $e) { /* echo $e->getMessage(); */ }
             }
 
+            $config->setSharedFields(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId);
             // joins to collection
             foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId) as $field) {
+
                 try {
                     $event->getCollection()->join(
                         $field['table'],
                         str_replace('{{table}}', '`' . $field['table'] . '`', $field['condition']),
-                        $field['field']
+                        $field['array_cols']  // WebShopApps change
+                         //$field['field'] // array('expected_delivery','dispatch_date')
                     );
                     $columnJoinField[$field['column']] = $field['field'];
                 } catch (Exception $e) { /* echo $e->getMessage(); */ }
             }
+
 
             // update index from join_index (needed for joins)
             foreach (Mage::registry('hackathon_gridcontrol_current_block')->getColumns() as $column) {

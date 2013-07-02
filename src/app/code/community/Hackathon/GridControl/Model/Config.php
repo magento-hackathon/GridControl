@@ -38,9 +38,43 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
             $this->_collectionUpdates[$type][$block][] = $value;
         }
 
+
         return $this;
     }
 
+
+    /**
+     * Added by WebShopApps
+     * Note: this currently only works for upto 2 new columns
+     * @param $type
+     * @param $block
+     * @return $this
+     */
+    public function setSharedFields($type, $block) {
+        $firstTimeRound = true;
+        $previousKey = null;
+        foreach ($this->_collectionUpdates[$type][$block] as $key=>$collUpdate) {
+
+            if ($firstTimeRound) {
+                $previousKey = $key;
+                $firstTimeRound = false;
+                continue;
+            }
+
+            if ($this->_collectionUpdates[$type][$block][$previousKey]['table']==$collUpdate['table']) {
+                // same table, lets join the columns on both
+                $currColArr = $this->_collectionUpdates[$type][$block][$previousKey]['array_cols'];
+                $currColArr[] = $collUpdate['field'];
+                $this->_collectionUpdates[$type][$block][$previousKey]['array_cols']=$currColArr;
+                $collUpdate['array_cols']=$currColArr;
+            }
+            $previousKey = $key;
+        }
+
+        Mage::log($this->_collectionUpdates);
+
+        return $this;
+    }
     /**
      * returns collection updates
      *
