@@ -35,6 +35,15 @@
                     </hackathon_gridcontrol>
                 </observers>
             </core_collection_abstract_load_before>
+            <eav_collection_abstract_load_before>
+                <observers>
+                    <hackathon_gridcontrol>
+                        <type>singleton</type>
+                        <class>hackathon_gridcontrol/observer</class>
+                        <method>eavCollectionAbstractLoadBefore</method>
+                    </hackathon_gridcontrol>
+                </observers>
+            </eav_collection_abstract_load_before>
         </events>
     </adminhtml>
 </config>

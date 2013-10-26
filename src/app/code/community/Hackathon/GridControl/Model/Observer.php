@@ -43,10 +43,12 @@ class Hackathon_GridControl_Model_Observer
              */
             $config = Mage::getSingleton('hackathon_gridcontrol/config');
 
-            // add attributes to collection
-            //foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_ADD_ATTRIBUTE, $blockId) as $entry) {
-                //$event->getCollection()->addAttributeToSelect($entry);
-            //}
+            // add attributes to eav collection
+            if ($event->getCollection() instanceof Mage_Eav_Model_Entity_Collection_Abstract){
+                foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_ADD_ATTRIBUTE, $blockId) as $entry) {
+                    $event->getCollection()->addAttributeToSelect($entry);
+                }
+            }
 
             // join attributes to collection
             foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN_ATTRIBUTE, $blockId) as $attribute) {
