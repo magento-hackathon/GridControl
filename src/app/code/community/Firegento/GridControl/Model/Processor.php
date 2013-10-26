@@ -57,7 +57,11 @@ class FireGento_GridControl_Model_Processor
      */
     protected function _removeAction($params)
     {
-        $params->getBlock()->removeColumn($params->getColumn()->getName());
+        if (method_exists($params->getBlock(), 'removeColumn')){
+            $params->getBlock()->removeColumn($params->getColumn()->getName());
+        } else {
+            $this->removeGridColumn($params->getBlock(), $params->getColumn()->getName());
+        }
     }
 
     /**
@@ -144,5 +148,76 @@ class FireGento_GridControl_Model_Processor
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
         return $method->invoke($object);
+    }
+
+    /**
+     * gets reflected property
+     *
+     * @param Mage_Adminhtml_Block_Widget_Grid $grid
+     * @param string $propertyName
+     * @return ReflectionProperty
+     */
+    private function getReflectedProperty(Mage_Adminhtml_Block_Widget_Grid $grid, $propertyName)
+    {
+        $reflection = new ReflectionClass($grid);
+        $property = $reflection->getProperty($propertyName);
+        $property->setAccessible(true);
+        return $property;
+    }
+
+    /**
+     * gets a value of protected property on a grid object
+     *
+     * @param Mage_Adminhtml_Block_Widget_Grid $grid
+     * @param string $propertyName
+     * @return array
+     */
+    private function getGridProtectedPropertyValue(Mage_Adminhtml_Block_Widget_Grid $grid, $propertyName)
+    {
+        $property = $this->getReflectedProperty($grid, $propertyName);
+        return $property->getValue($grid);
+    }
+
+    /**
+     * sets a value of protected property on a grid object
+     *
+     * @param Mage_Adminhtml_Block_Widget_Grid $grid
+     * @param string $propertyName
+     * @param mixed $propertyValue
+     * @return Mage_Adminhtml_Block_Widget_Grid
+     */
+    private function setGridProtectedPropertyValue(
+        Mage_Adminhtml_Block_Widget_Grid $grid,
+        $propertyName,
+        $propertyValue
+    )
+    {
+        $property = $this->getReflectedProperty($grid, $propertyName);
+        $property->setValue($grid, $propertyValue);
+    }
+
+    /**
+     * removes a column from grid if grid doesn't have any method to do it (i.e. Magento 1.5)
+     *
+     * @param Mage_Adminhtml_Block_Widget_Grid $grid
+     * @param string $columnName
+     */
+    protected function removeGridColumn(Mage_Adminhtml_Block_Widget_Grid $grid, $columnName)
+    {
+        $columnsPropertyName = '_columns';
+        $lastColumnIdPropertyName = '_lastColumnId';
+
+        $columns = $this->getGridProtectedPropertyValue($grid, $columnsPropertyName);
+        $lastColumnId = $this->getGridProtectedPropertyValue($grid, $lastColumnIdPropertyName);
+
+        if (isset($columns[$columnName])) {
+            unset($columns[$columnName]);
+            if ($lastColumnId == $columnName){
+                $lastColumnId = key($columns);
+            }
+        }
+
+        $this->setGridProtectedPropertyValue($grid, $columnsPropertyName, $columns);
+        $this->setGridProtectedPropertyValue($grid, $lastColumnIdPropertyName, $lastColumnId);
     }
 }
