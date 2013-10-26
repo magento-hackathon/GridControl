@@ -8,7 +8,7 @@
  * eav_collection_abstract_load_before:
  * checks if current blockid is set to add joints and attributes to grid collection
  */
-class Hackathon_GridControl_Model_Observer
+class FireGento_GridControl_Model_Observer
 {
     /**
      * observe adminhtml_block_html_before
@@ -20,8 +20,8 @@ class Hackathon_GridControl_Model_Observer
     {
         $block = $event->getBlock();
 
-        if (in_array($block->getId(), Mage::getSingleton('hackathon_gridcontrol/config')->getGridList())) {
-            Mage::getModel('hackathon_gridcontrol/processor')->processBlock($block);
+        if (in_array($block->getId(), Mage::getSingleton('firegento_gridcontrol/config')->getGridList())) {
+            Mage::getModel('firegento_gridcontrol/processor')->processBlock($block);
         }
     }
 
@@ -35,23 +35,23 @@ class Hackathon_GridControl_Model_Observer
     {
         $columnJoinField = array();
 
-        if (Mage::registry('hackathon_gridcontrol_current_block')) {
-            $blockId = Mage::registry('hackathon_gridcontrol_current_block')->getId();
+        if (Mage::registry('firegento_gridcontrol_current_block')) {
+            $blockId = Mage::registry('firegento_gridcontrol_current_block')->getId();
 
             /**
-             * @var Hackathon_GridControl_Model_Config $config
+             * @var FireGento_GridControl_Model_Config $config
              */
-            $config = Mage::getSingleton('hackathon_gridcontrol/config');
+            $config = Mage::getSingleton('firegento_gridcontrol/config');
 
             // add attributes to eav collection
             if ($event->getCollection() instanceof Mage_Eav_Model_Entity_Collection_Abstract){
-                foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_ADD_ATTRIBUTE, $blockId) as $entry) {
+                foreach ($config->getCollectionUpdates(FireGento_GridControl_Model_Config::TYPE_ADD_ATTRIBUTE, $blockId) as $entry) {
                     $event->getCollection()->addAttributeToSelect($entry);
                 }
             }
 
             // join attributes to collection
-            foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN_ATTRIBUTE, $blockId) as $attribute) {
+            foreach ($config->getCollectionUpdates(FireGento_GridControl_Model_Config::TYPE_JOIN_ATTRIBUTE, $blockId) as $attribute) {
                 $attribute = explode('|', $attribute);
                 // 5 parameters needed for joinAttribute()
                 if (count($attribute) < 5) {
@@ -69,7 +69,7 @@ class Hackathon_GridControl_Model_Observer
             }
 
             // join fields to collection
-            foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN_FIELD, $blockId) as $field) {
+            foreach ($config->getCollectionUpdates(FireGento_GridControl_Model_Config::TYPE_JOIN_FIELD, $blockId) as $field) {
                 $field = explode('|', $field);
                 // 6 parameters needed for joinField()
                 if (count($field) < 6) {
@@ -88,7 +88,7 @@ class Hackathon_GridControl_Model_Observer
             }
 
             // joins to collection
-            foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId) as $field) {
+            foreach ($config->getCollectionUpdates(FireGento_GridControl_Model_Config::TYPE_JOIN, $blockId) as $field) {
                 try {
                     $event->getCollection()->join(
                         $field['table'],
@@ -100,7 +100,7 @@ class Hackathon_GridControl_Model_Observer
             }
 
             // update index from join_index (needed for joins)
-            foreach (Mage::registry('hackathon_gridcontrol_current_block')->getColumns() as $column) {
+            foreach (Mage::registry('firegento_gridcontrol_current_block')->getColumns() as $column) {
                 if (isset($columnJoinField[$column->getId()])) {
                     $column->setIndex($columnJoinField[$column->getId()]);
                 }

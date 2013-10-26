@@ -1,2 +1,2 @@
-src/app/code/community/Hackathon/GridControl	app/code/community/Hackathon/GridControl
-src/app/etc/modules/Hackathon_GridControl.xml	app/etc/modules/Hackathon_GridControl.xml
+src/app/code/community/FireGento/GridControl	app/code/community/FireGento/GridControl
+src/app/etc/modules/FireGento_GridControl.xml	app/etc/modules/FireGento_GridControl.xml

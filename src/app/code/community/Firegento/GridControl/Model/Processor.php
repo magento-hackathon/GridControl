@@ -5,7 +5,7 @@
  * @todo check for remove and add on one column entity
  * @todo find a better way to call _prepareCollection (without reflection)
  */
-class Hackathon_GridControl_Model_Processor
+class FireGento_GridControl_Model_Processor
 {
     /**
      * processes the grid block, checks gridcontrol configuration for updates on this block and calls column actions
@@ -14,7 +14,7 @@ class Hackathon_GridControl_Model_Processor
      */
     public function processBlock($block)
     {
-        $config = Mage::getSingleton('hackathon_gridcontrol/config')->getConfig();
+        $config = Mage::getSingleton('firegento_gridcontrol/config')->getConfig();
 
         $blockConfig = $config->getNode('grids/' . $block->getId());
 
@@ -42,12 +42,12 @@ class Hackathon_GridControl_Model_Processor
         // resort columns
         $block->sortColumnsByOrder();
 
-        // register current block, needed to extend the collection in Hackathon_GridControl_Model_Observer
-        Mage::register('hackathon_gridcontrol_current_block', $block);
+        // register current block, needed to extend the collection in FireGento_GridControl_Model_Observer
+        Mage::register('firegento_gridcontrol_current_block', $block);
         // call _prepareCollection to reload the collection and apply column filters
         $this->_callProtectedMethod($block, '_prepareCollection');
         // remove current block to prevent race conditions in later collection loads
-        Mage::unregister('hackathon_gridcontrol_current_block');
+        Mage::unregister('firegento_gridcontrol_current_block');
     }
 
     /**
@@ -80,22 +80,22 @@ class Hackathon_GridControl_Model_Processor
         $columnConfig = array();
         $blockId = $params->getBlock()->getId();
         /**
-         * @var Hackathon_GridControl_Model_Config $config
+         * @var FireGento_GridControl_Model_Config $config
          */
-        $config = Mage::getSingleton('hackathon_gridcontrol/config');
+        $config = Mage::getSingleton('firegento_gridcontrol/config');
 
         foreach ($params->getAction()->children() as $attribute) {
             // 4 special cases
             if ($attribute->getName() == 'index') {
-                $config->addCollectionUpdate(Hackathon_GridControl_Model_Config::TYPE_ADD_ATTRIBUTE, $blockId, (string) $attribute);
+                $config->addCollectionUpdate(FireGento_GridControl_Model_Config::TYPE_ADD_ATTRIBUTE, $blockId, (string) $attribute);
             } else if ($attribute->getName() == 'joinAttribute') {
-                $config->addCollectionUpdate(Hackathon_GridControl_Model_Config::TYPE_JOIN_ATTRIBUTE, $blockId, (string) $attribute);
+                $config->addCollectionUpdate(FireGento_GridControl_Model_Config::TYPE_JOIN_ATTRIBUTE, $blockId, (string) $attribute);
                 continue;
             } else if ($attribute->getName() == 'joinField') {
-                $config->addCollectionUpdate(Hackathon_GridControl_Model_Config::TYPE_JOIN_FIELD, $blockId, (string) $attribute);
+                $config->addCollectionUpdate(FireGento_GridControl_Model_Config::TYPE_JOIN_FIELD, $blockId, (string) $attribute);
                 continue;
             } else if ($attribute->getName() == 'join') {
-                $config->addCollectionUpdate(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId, array(
+                $config->addCollectionUpdate(FireGento_GridControl_Model_Config::TYPE_JOIN, $blockId, array(
                     'table' => (string) $attribute['table'],
                     'condition' => (string) $attribute['condition'],
                     'field' => (string) $attribute['field'],

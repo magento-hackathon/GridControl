@@ -1,0 +1,16 @@
+{
+    "name": "firegento/gridcontrol",
+    "license": ["GPL-3.0"],
+    "type": "magento-module",
+    "description": "Full control over your admin grids with xml.",
+    "homepage": "https://github.com/firegento/firegento-gridcontrol",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.firegento.com"
+        }
+    ]
+}

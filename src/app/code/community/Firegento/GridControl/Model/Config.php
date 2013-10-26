@@ -2,7 +2,7 @@
 /**
  * loads gridcontrol.xml configuration and stores collection updates
  */
-class Hackathon_GridControl_Model_Config extends Varien_Object
+class FireGento_GridControl_Model_Config extends Varien_Object
 {
     /**
      * @var null|Varien_Simplexml_Config $_config
@@ -22,7 +22,7 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
      * @param string $type
      * @param string $block
      * @param string $value
-     * @return Hackathon_GridControl_Model_Config
+     * @return FireGento_GridControl_Model_Config
      */
     public function addCollectionUpdate($type, $block, $value)
     {

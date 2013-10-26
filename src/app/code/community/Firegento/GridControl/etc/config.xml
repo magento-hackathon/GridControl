@@ -2,15 +2,15 @@
 <config>
     <global>
         <models>
-            <hackathon_gridcontrol>
-                <class>Hackathon_GridControl_Model</class>
-            </hackathon_gridcontrol>
+            <firegento_gridcontrol>
+                <class>FireGento_GridControl_Model</class>
+            </firegento_gridcontrol>
         </models>
 
         <helpers>
-            <hackathon_gridcontrol>
-                <class>Hackathon_GridControl_Helper</class>
-            </hackathon_gridcontrol>
+            <firegento_gridcontrol>
+                <class>FireGento_GridControl_Helper</class>
+            </firegento_gridcontrol>
         </helpers>
     </global>
 
@@ -18,30 +18,30 @@
         <events>
             <adminhtml_block_html_before>
                 <observers>
-                    <hackathon_gridcontrol>
+                    <firegento_gridcontrol>
                         <type>singleton</type>
-                        <class>hackathon_gridcontrol/observer</class>
+                        <class>firegento_gridcontrol/observer</class>
                         <method>adminhtmlBlockHtmlBefore</method>
-                    </hackathon_gridcontrol>
+                    </firegento_gridcontrol>
                 </observers>
             </adminhtml_block_html_before>
 
             <core_collection_abstract_load_before>
                 <observers>
-                    <hackathon_gridcontrol>
+                    <firegento_gridcontrol>
                         <type>singleton</type>
-                        <class>hackathon_gridcontrol/observer</class>
+                        <class>firegento_gridcontrol/observer</class>
                         <method>eavCollectionAbstractLoadBefore</method>
-                    </hackathon_gridcontrol>
+                    </firegento_gridcontrol>
                 </observers>
             </core_collection_abstract_load_before>
             <eav_collection_abstract_load_before>
                 <observers>
-                    <hackathon_gridcontrol>
+                    <firegento_gridcontrol>
                         <type>singleton</type>
-                        <class>hackathon_gridcontrol/observer</class>
+                        <class>firegento_gridcontrol/observer</class>
                         <method>eavCollectionAbstractLoadBefore</method>
-                    </hackathon_gridcontrol>
+                    </firegento_gridcontrol>
                 </observers>
             </eav_collection_abstract_load_before>
         </events>

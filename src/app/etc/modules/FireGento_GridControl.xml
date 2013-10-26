@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <config>
     <modules>
-        <Hackathon_GridControl>
+        <FireGento_GridControl>
             <active>true</active>
             <codePool>community</codePool>
-        </Hackathon_GridControl>
+        </FireGento_GridControl>
     </modules>
 </config>
