@@ -87,7 +87,6 @@ class Hackathon_GridControl_Model_Observer
 
             $config->setSharedFields(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId);
             // joins to collection
-            $theConfig = $config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId);
             foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId) as $field) {
 
                 try {

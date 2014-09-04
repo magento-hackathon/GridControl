@@ -77,7 +77,7 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
                 $collUpdate['array_cols']=$currColArr;
             }*/
             if(array_key_exists($collUpdate['table'], $columnsArray)) {
-                $this->_collectionUpdates[$type][$block][$previousKey]['array_cols']=$columnsArray[$collUpdate['table']];
+                $this->_collectionUpdates[$type][$block][$key]['array_cols']=$columnsArray[$collUpdate['table']];
             }
          //   $previousKey = $key;
         }
