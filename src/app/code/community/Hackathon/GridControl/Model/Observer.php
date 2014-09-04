@@ -87,6 +87,7 @@ class Hackathon_GridControl_Model_Observer
 
             $config->setSharedFields(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId);
             // joins to collection
+            $theConfig = $config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId);
             foreach ($config->getCollectionUpdates(Hackathon_GridControl_Model_Config::TYPE_JOIN, $blockId) as $field) {
 
                 try {
@@ -94,7 +95,7 @@ class Hackathon_GridControl_Model_Observer
                         $field['table'],
                         str_replace('{{table}}', '`' . $field['table'] . '`', $field['condition']),
                         $field['array_cols']  // WebShopApps change
-                         //$field['field'] // array('expected_delivery','dispatch_date')
+                   //      array('delivery_date','dispatch_date', 'shipping_description', 'time_slot')
                     );
                     $columnJoinField[$field['column']] = $field['field'];
                 } catch (Exception $e) { /* echo $e->getMessage(); */ }

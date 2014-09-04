@@ -53,9 +53,17 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
     public function setSharedFields($type, $block) {
         $firstTimeRound = true;
         $previousKey = null;
+        $columnsArray = array();
+        foreach ($this->_collectionUpdates[$type][$block] as $key=>$collUpdate) {
+            if(!array_key_exists($collUpdate['table'],$columnsArray)) {
+                $columnsArray[$collUpdate['table']] = array();
+            }
+            $columnsArray[$collUpdate['table']][] = $collUpdate['field'];
+        }
+
         foreach ($this->_collectionUpdates[$type][$block] as $key=>$collUpdate) {
 
-            if ($firstTimeRound) {
+        /*    if ($firstTimeRound) {
                 $previousKey = $key;
                 $firstTimeRound = false;
                 continue;
@@ -67,8 +75,11 @@ class Hackathon_GridControl_Model_Config extends Varien_Object
                 $currColArr[] = $collUpdate['field'];
                 $this->_collectionUpdates[$type][$block][$previousKey]['array_cols']=$currColArr;
                 $collUpdate['array_cols']=$currColArr;
+            }*/
+            if(array_key_exists($collUpdate['table'], $columnsArray)) {
+                $this->_collectionUpdates[$type][$block][$previousKey]['array_cols']=$columnsArray[$collUpdate['table']];
             }
-            $previousKey = $key;
+         //   $previousKey = $key;
         }
         return $this;
     }
