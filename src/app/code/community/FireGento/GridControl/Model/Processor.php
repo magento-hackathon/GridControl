@@ -130,7 +130,11 @@ class FireGento_GridControl_Model_Processor
                 $columnConfig[$attribute->getName()] = (string) $attribute;
             }
         }
-
+        
+        if (isset($columnConfig['header'])) {
+            $columnConfig['header'] = $params->getBlock()->__($columnConfig['header']);
+        }
+        
         // add column to grid block
         $params->getBlock()->addColumn($params->getColumn()->getName(), $columnConfig);
     }
