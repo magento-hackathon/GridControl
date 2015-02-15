@@ -65,7 +65,9 @@ class FireGento_GridControl_Model_Observer
                         (strlen($attribute[3]) ? $attribute[3] :null),
                         $attribute[4]
                     );
-                } catch (Exception $e) { /* echo $e->getMessage(); */ }
+                } catch (Exception $e) {
+                    Mage::logException($e);
+                }
             }
 
             // join fields to collection
@@ -84,7 +86,9 @@ class FireGento_GridControl_Model_Observer
                         $field[4],
                         $field[5]
                     );
-                } catch (Exception $e) { /* echo $e->getMessage(); */ }
+                } catch (Exception $e) {
+                    Mage::logException($e);
+                }
             }
 
             // joins to collection
@@ -96,7 +100,9 @@ class FireGento_GridControl_Model_Observer
                         $field['field']
                     );
                     $columnJoinField[$field['column']] = $field['field'];
-                } catch (Exception $e) { /* echo $e->getMessage(); */ }
+                } catch (Exception $e) {
+                    Mage::logException($);
+                }
             }
 
             // update index from join_index (needed for joins)
