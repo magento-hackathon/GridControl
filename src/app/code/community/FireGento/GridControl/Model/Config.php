@@ -74,8 +74,10 @@ class FireGento_GridControl_Model_Config extends Varien_Object
         $this->_config = $gridcontrolConfig;
 
         // collect affected grid id's
-        foreach ($this->_config->getNode('grids')->children() as $grid) {
-            $this->_gridList[] = $grid->getName();
+        if($this->_config->getNode('grids') !== false) {
+            foreach ($this->_config->getNode('grids')->children() as $grid) {
+                $this->_gridList[] = $grid->getName();
+            }
         }
     }
 
