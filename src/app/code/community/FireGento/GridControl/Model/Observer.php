@@ -101,7 +101,7 @@ class FireGento_GridControl_Model_Observer
                     );
                     $columnJoinField[$field['column']] = $field['field'];
                 } catch (Exception $e) {
-                    Mage::logException($);
+                    Mage::logException($e);
                 }
             }
 
