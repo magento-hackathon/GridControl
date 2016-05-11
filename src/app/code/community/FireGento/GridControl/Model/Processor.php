@@ -110,9 +110,15 @@ class FireGento_GridControl_Model_Processor
                 if (strpos((string) $attribute, '::') !== false) {
                     list($_module, $_method) = explode('::', (string) $attribute);
                     $_module = Mage::getSingleton($_module);
+                    if ($_args = strstr($_method, '(')) {
+                        $_method = str_replace($_args, '', $_method);
+                        $_args = array_map('trim', explode(',', str_replace(array('(', ')', '\'', '"'), '', $_args)));
+                    } else {
+                        $_args = array();
+                    }
                     $_call = array($_module, $_method);
                     if (is_callable($_call)) {
-                        $columnConfig['options'] = call_user_func($_call);
+                        $columnConfig['options'] = call_user_func($_call, $_args);
                         continue;
                     }
                 }
