@@ -52,6 +52,15 @@ XML Syntax
                 </add>
             </column>
 
+            <manufacturer>
+                <add>
+                    <header>Manufacturer</header>
+                    <type>options</type>
+                    <index>manufacturer</index>
+                    <options>firegento_gridcontrol/utility::getDropdownAttributeLabelOptionArray(manufacturer)</options>
+                </add>
+            </manufacturer>
+
             <selecttest>
                 <add>
                     <header>Status Column</header>
