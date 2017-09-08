@@ -40,7 +40,12 @@ class FireGento_GridControl_Model_Processor
         }
 
         // resort columns
-        $block->sortColumnsByOrder();
+        
+        // Clash with Bl_CustomGrid and ordering of columns via its admin interface
+        // do not order if BL_CustomGrid is enabled
+        if (!Mage::helper('core')->isModuleEnabled('BL_CustomGrid')){
+            $block->sortColumnsByOrder();
+        }
 
         // register current block, needed to extend the collection in FireGento_GridControl_Model_Observer
         Mage::register('firegento_gridcontrol_current_block', $block);
