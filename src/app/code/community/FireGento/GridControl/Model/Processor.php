@@ -43,7 +43,7 @@ class FireGento_GridControl_Model_Processor
         
         // Clash with Bl_CustomGrid and ordering of columns via its admin interface
         // do not order if BL_CustomGrid is enabled
-        if (Mage::helper('core')->isModuleEnabled('BL_CustomGrid')){
+        if (!Mage::helper('core')->isModuleEnabled('BL_CustomGrid')){
             $block->sortColumnsByOrder();
         }
 
