@@ -13,6 +13,7 @@ Features
 - move columns
 - add new attributes
 - join new attributes
+- update columns
 
 Todo
 -----
@@ -51,6 +52,17 @@ XML Syntax
                     <joinField>qty|cataloginventory/stock_item|qty|product_id=entity_id|{{table}}.stock_id=1|left</joinField>
                 </add>
             </column>
+
+            <existingColumn>
+                <updateColumn>
+                    <attributeToUpdate>newValue</attributeToUpdate>
+                </updateColumn>
+            </existingColumn>
+            <real_order_id>
+                <updateColumn>
+                    <filter_index>main_table.increment_id</filter_index>
+                </updateColumn>
+            </real_order_id>
 
             <manufacturer>
                 <add>

@@ -230,4 +230,26 @@ class FireGento_GridControl_Model_Processor
         $this->setGridProtectedPropertyValue($grid, $columnsPropertyName, $columns);
         $this->setGridProtectedPropertyValue($grid, $lastColumnIdPropertyName, $lastColumnId);
     }
+
+    /**
+     * Updates an existing column
+     * Example: <status><updateColumn><filter_index>main_table.status</filter_index></updateColumn></status>
+     * @param array $params
+     */
+    protected function _updateColumnAction($params)
+    {
+        $columnConfig = array();
+        $blockId = $params->getBlock()->getId();
+        /**
+         * @var FireGento_GridControl_Model_Config $config
+         */
+        $config = Mage::getSingleton('firegento_gridcontrol/config');
+
+        foreach ($params->getAction()->children() as $attribute) {
+//            $params->getBlock()->getColumn('status')->setData('index', 'main_table.status')
+            $params->getBlock()->getColumn($params->getColumn()->getName())->setData(
+                $attribute->getName(), (string)$attribute
+            );
+        }
+    }
 }
